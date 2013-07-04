@@ -8,33 +8,56 @@
         $("#submitButton").addClass("cancel");
         return;
     }
+
+    function loginComplete(data) {
+
+    }
+
 </script>
 @section featured{
     <div class="featured content-wrapper">
-        @using (Html.BeginForm("Login", "Account", FormMethod.Post))
+        @* @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { onclick = "javascript:login();" }))
+        {*@
+        <div class="leftPara">
+            Let's take a look at this simple login page.<br />
+            Now what do we need on this login page? Simple! Two controls where users can type
+            in their user name and password. Ok that said, what else do we need? Hmmm... We
+            need to have simple validation on both these fields.<br />
+            Now the validations can be done either on the Server or the Client. Ok let us take
+            a look at the Server validation. Click <a href="#" class="fancyA" onclick="javascript:disableValidation();">
+                here</a> to disable client validation. Now click on the Loing button. You would
+            see that the page is posted back to the server and the controls are validated on
+            the server. To test this you can use the Firefox "Net" tab to actually see that
+            the request is sent to the server. You can also use <a href="">Fiddler</a>, a fantastic
+            tool to debug web requests and response. To test client validation click on the
+            blogs button again, which will reload the login page, and click on the login button
+            again. You will see that the controls are vaidated on the client. The server and
+            client validations work together with couple of components.
+            <ul>
+                <li>DataAnnotation Attribute (Foolproof is a extended data annotation library which
+                    has some additional Attributes which do not come with standard library). </li>
+            </ul>
+        </div>
+        @using (Ajax.BeginForm("Login", "Account", new AjaxOptions { Confirm = string.Empty, HttpMethod = "POST", OnComplete = "loginComplete" }))
         {
-            <div class="leftPara">
-                Let's take a look at this simple login page.<br />
-                Now what do we need on this login page? Simple! Two controls where users can type
-                in their user name and password. Ok that said, what else do we need? Hmmm... We
-                need to have simple validation on both these fields.<br />
-                Now the validations can be done either on the Server or the Client. Ok let us take
-                a look at the Server validation. Click <a href="#" class="fancyA" onclick="javascript:disableValidation();">
-                    here</a> to disable client validation. Now click on the Loing button. You would
-                see that the page is posted back to the server and the controls are validated on
-                the server. To test this you can use the Firefox "Net" tab to actually see that
-                the request is sent to the server. You can also use <a href="">Fiddler</a>, a fantastic
-                tool to debug web requests and response. To test client validation click on the
-                blogs button again, which will reload the login page, and click on the login button
-                again. You will see that the controls are vaidated on the client. The server and
-                client validations work together with couple of components.
-                <ul>
-                    <li>DataAnnotation Attribute (Foolproof is a extended data annotation library which
-                        has some additional Attributes which do not come with standard library). </li>
-                </ul>
-            </div>    
-
+            @Html.ValidationMessage("NotFound")
             <div class="content-wrapper">
+                <h2>
+                    Login</h2>
+                <fieldset>
+                    <div>
+                        <div>@Html.ValidationMessageFor(x => x.UserName)</div>
+                        <span>User Name</span> <span>@Html.TextBoxFor(x => x.UserName)</span>
+                    </div>
+                    <div>
+                        <div>@Html.ValidationMessageFor(x => x.Password)</div>
+                        <span>Password</span> <span>@Html.PasswordFor(x => x.Password)</span>
+                    </div>
+                    <input type="submit" value="Login" id="submitButton" />
+                </fieldset>
+            </div>
+        }
+        @*            <div class="content-wrapper">
                 <h2>
                     Login</h2>
                 <fieldset>
@@ -50,10 +73,10 @@
                     </div>
                     <input type="submit" value="Login" id="submitButton" />
                 </fieldset>
-            </div>
-            <p>
-                Now you understand how this validation stuff works. Lets login and dive in deeper.
-                If you are not registered you can do it by clicking @Html.ActionLink("here", "Register", "Account", new { @class = "fancyA" })</p>
-        }
+            </div>*@
+        <p>
+            Now you understand how this validation stuff works. Lets login and dive in deeper.
+            If you are not registered you can do it by clicking @Html.ActionLink("here", "Register", "Account", new { @class = "fancyA" })</p>
+        @*        }*@
     </div>
 }

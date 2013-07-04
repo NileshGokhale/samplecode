@@ -48,8 +48,12 @@ namespace GuestBook.Controllers
                     Security.FormsAuthHelper.SetAuthTicket(loginModel.UserName);
                     return RedirectToAction("Index", "Home");
                 }
+                else
+                {
+                    ModelState.AddModelError("NotFound", "User not found");
+                }
             }
-            return View();
+            return View(loginModel);
 
 
 
