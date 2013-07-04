@@ -1,0 +1,26 @@
+﻿@{                
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@if (User.Identity != null && !string.IsNullOrEmpty(User.Identity.Name))
+{
+@*@Html.ActionLink("Create blog", "Create", "Blog", new { area = "Blogs" }, null)*@
+    <a href="@Url.Action("Create", "Blog", new { area = "Blogs" })">New</a>
+}
+<h2>
+    Index</h2>
+<div class="leftPara">
+    Did you know that this view is rendered from an AREA on this site? See the URL;
+    Blogs is the area (folder) and Blog is the controller (Don't know what contollers
+    are? You can visit microsoft to learn the MVC architecture <a href="http://msdn.microsoft.com/en-us/library/dd381412(VS.98).aspx"
+        target="_blank" class="fancyA">here</a>)<br />
+    Areas are pretty simple. You can think of an area as a feature divided in different
+    folder structure of the application. So for this site I have seperated out the Blog
+    controller inside a Blogs area.<br />
+    Now on the right side you would see a list of Years. Clicking on any link will drill
+    down to the months list in that particular year. The months which have blogs will
+    be listed only. Another way to access a particular blog entry is by specifying YEAER/MONTH/DAY
+    in the URL of the address bar of this browser. EX: Blogs/Blog/2013/06 will list
+    all blogs from June-2013. If you want you can append the URL in this browser address
+    bar, with the year you want and the site will show you if there are any blogs present
+    in any of the months in that year.</div>

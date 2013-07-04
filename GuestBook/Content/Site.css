@@ -1,0 +1,101 @@
+﻿html
+{
+	background-color:silver;
+}
+
+body
+{
+	padding:0;
+	margin:0;
+	background-color:white; 
+	font-size:.85em;
+	height:auto; 
+}
+#body
+{
+	background-color:white;
+}
+
+ul#menu
+{
+	text-align:right;
+	font-size:1.2em;
+}
+
+ul#menu li
+{
+	display:inline;
+	list-style-type:none;
+	padding-left:10px;
+}
+
+ul#menu li a
+{
+	text-decoration:none;
+	color:#000;
+}
+
+ul#menu li a:hover
+{
+	color:#e2e2e2;
+	background-color:#2e2e2e;
+}
+
+footer
+{
+	border-top:1px solid #fff;
+	font-size:1.2em;
+	clear:both;
+}
+
+#login
+{
+	text-align:right;
+}
+.content
+{
+	font-size: .9em;
+	font-family: Verdana Sans-Serif;
+	top: 100px;
+	left: 50px;
+}
+
+.leftPara
+{
+	height: auto;
+	display: block;
+	margin: 10px;
+	text-align: justify;
+	float: left !important;
+	width: 500px; 
+}
+
+.rightPara
+{
+	float:right;
+	margin:10px;
+	width:430px;
+}
+.fancyA
+{
+	color: Highlight;
+	elevation: higher;
+	text-transform: capitalize;
+	border: 1px solid green;
+}
+
+ol.codeblock
+{
+	border:1px solid blue;
+	line-height:20px;
+	float:left;
+	width:450px;
+	padding: 20px 0 20px 40px;
+	font: bold 12px "Courier New", Arial, Helvetica, sans-serif;
+}
+
+ol.codeblock li code
+{
+	padding-left: 10px;
+	color:#0000a0;
+}

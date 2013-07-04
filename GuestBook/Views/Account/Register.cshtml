@@ -1,0 +1,78 @@
+﻿@model GuestBook.Models.RegisterModel
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="../../Scripts/jquery.pstrength-min.1.2.js" type="text/javascript"></script>
+<script language="javascript">
+    function registerUser() {
+        var form = $("#registerForm");
+    }
+
+    function renderPartial() {
+        $.ajax({
+            url: '@Url.Action("RegisterPartial", "Account")',
+            type: 'GET',
+            async: false,
+            success: function (data) {
+                $("#partialView").hide();
+                $("#partialView").html(data);
+                $("#partialView").show("slow");
+            }
+        });
+    }
+</script>
+<div id="message">
+    @if (ViewBag.Error != null)
+    {
+        <spam class="error">@ViewBag.Error</spam>
+        
+    }
+</div>
+<h2>
+    Register</h2>
+<div class="leftPara">
+    Ok, so we dont see any controls on this page huh. Lets get that page from the server.
+    Click <a href="#" class="fancyA" onclick="javascript:renderPartial();">here</a>
+    to get the register form from the server. Cool huh? Did you know how this page was
+    rendered? Yea.. if you an expert MVC developer you might know the answer, but this
+    is not for you guys. If you are a beginer, read on. First of all the page is not
+    actually a full page, it is a partial page. Partial pages aka PartialViews are like
+    ASP.NET User controls. Note: Any page(VIEW in MVC) can be a partial page. The only
+    problem is that it wont make sense if we have a page with a Master Layout and render
+    it as a partial view.Now how was this done? It's simple, there is a small javascript
+    function on this page which sends an AJAX request to the server and get the partial
+    view. Here is the code
+    <br />
+    <ol class="codeblock">
+        <li><code>function renderPartial() {</code></li>
+        <li><code>$.ajax({</code></li>
+        <li><code>url: '@Url.Action("RegisterPartial", "Account")',</code></li>
+        <li><code>type: 'GET',</code></li>
+        <li><code>async: false,</code></li>
+        <li><code>success: function (data) {</code></li>
+        <li><code>$("#partialView").hide();</code></li>
+        <li><code>$("#partialView").html(data);</code></li>
+        <li><code>$("#partialView").show("slow");</code></li>
+        <li><code>}</code></li>
+        <li><code>});</code></li>
+        <li><code>}</code></li>
+    </ol>
+    Now the code may be bit sloppy but its fine, the only thing it does is gets the HTML from the server and appends it to the 
+    partialView div using JQUERY. Cant be more fancy than that.
+    Now, do you know the controls that are rendered are rendered using a single line of code?
+    Here is a cool thing that MVC does for us. When you use the out-of-box feature provided
+    by MVC you dont have to take the pain of manually adding all controls to the page. 
+    You can use the extension method provided by MVC's HtmlHelper class like this @@Html.EditorFor(e => e)<br />
+    You might be wondering how MVC does it? Its easy The EditorFor extension method
+    works on the Model object which is storngly typed and tied with the current view.
+    It uses all the properties of this type to render the labels and text boxes.</div>
+<div id="partialView">
+</div>
+@*@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { id = "registerForm", onSubmit = "javscript:registerUser();" }))
+{
+    <div id="registration" class="rightPara">
+    @Html.EditorFor(x => x)
+        <input type="submit" value="Register" />
+    </div>
+}*@

@@ -1,0 +1,7 @@
+c:\myprojects\GuestBook\DataAccessObjects\bin\Debug\DataAccessObjects.dll
+c:\myprojects\GuestBook\DataAccessObjects\bin\Debug\DataAccessObjects.pdb
+c:\myprojects\GuestBook\DataAccessObjects\bin\Debug\MongoDB.Bson.dll
+c:\myprojects\GuestBook\DataAccessObjects\bin\Debug\MongoDB.Bson.xml
+c:\myprojects\GuestBook\DataAccessObjects\obj\Debug\ResolveAssemblyReference.cache
+c:\myprojects\GuestBook\DataAccessObjects\obj\Debug\DataAccessObjects.dll
+c:\myprojects\GuestBook\DataAccessObjects\obj\Debug\DataAccessObjects.pdb

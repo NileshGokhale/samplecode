@@ -1,0 +1,27 @@
+﻿@{
+    ViewBag.Title = "ValidateEmail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script type="text/javascript">
+    var verifyUrl = '@Url.Action("SendVerificationEmail", "Account")';
+    function sendVerification(emailId, uid) {
+        $.ajax({
+            url: verifyUrl,
+            type: 'POST',
+            data: { email: emailId, userName: uid },
+            dataType: 'json'
+        });
+    }
+</script>
+<h2>
+    ValidateEmail</h2>
+@if (ViewBag.Error == null)
+{
+    <h5>@ViewBag.Message Click @Html.ActionLink("here", "Login", "Account") to login</h5>
+}
+else
+{
+    <h5>@ViewBag.Error</h5>
+    <a href="#" onclick="sendVerification('@ViewBag.Email','@ViewBag.UserName')">Send verification
+        email</a>
+}

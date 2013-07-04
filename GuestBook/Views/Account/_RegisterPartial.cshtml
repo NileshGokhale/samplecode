@@ -1,0 +1,8 @@
+﻿@model GuestBook.Models.RegisterModel
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { id = "registerForm", onSubmit = "javscript:registerUser();" }))
+{
+    <div>
+        @Html.EditorFor(e => e)
+        <input type="submit" value="Register" />
+    </div>
+}

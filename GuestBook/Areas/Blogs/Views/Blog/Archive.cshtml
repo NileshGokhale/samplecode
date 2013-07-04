@@ -1,0 +1,22 @@
+﻿@model List<DTO.Blog>
+@{
+    ViewBag.Title = "Archive";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>
+    Archive</h2>
+@{
+    var blogList = Model as List<DTO.Blog>;
+}
+@*Blog list for a particular year/month*@
+@if (Model != null && Model.Any())
+{
+    foreach (var item in Model)
+    {
+    <a>@item.Topic</a>
+    }
+}
+else
+{
+    <span>No one posted anything this month.</span>
+}

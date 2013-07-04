@@ -1,0 +1,14 @@
+﻿<ul id="menu">
+    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)</li>
+    <li>@Html.ActionLink("About", "About", "Home", new { area = "" }, null)</li>
+    <li>@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, null)</li>
+    <li>@Html.ActionLink("Blogs", "Index", "Blog", new { area = "Blogs" }, null)</li>
+    @if (Context.User != null && string.IsNullOrEmpty(Context.User.Identity.Name))
+    {
+        <li>@Html.ActionLink("Register", "Register", "Account", new { area = "" }, null)</li>     
+    }
+    @if (Context.User != null && !string.IsNullOrEmpty(Context.User.Identity.Name))
+    {
+        <li>@Html.ActionLink("Logout", "Logout", "Account", new { area = "" }, null)</li>
+    }
+</ul>

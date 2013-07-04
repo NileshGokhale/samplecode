@@ -1,0 +1,11 @@
+c:\myprojects\GuestBook\MongoLibrary\bin\Debug\MongoLibrary.dll
+c:\myprojects\GuestBook\MongoLibrary\bin\Debug\MongoLibrary.pdb
+c:\myprojects\GuestBook\MongoLibrary\bin\Debug\DataAccessObjects.dll
+c:\myprojects\GuestBook\MongoLibrary\bin\Debug\MongoDB.Bson.dll
+c:\myprojects\GuestBook\MongoLibrary\bin\Debug\MongoDB.Driver.dll
+c:\myprojects\GuestBook\MongoLibrary\bin\Debug\DataAccessObjects.pdb
+c:\myprojects\GuestBook\MongoLibrary\bin\Debug\MongoDB.Bson.xml
+c:\myprojects\GuestBook\MongoLibrary\bin\Debug\MongoDB.Driver.xml
+c:\myprojects\GuestBook\MongoLibrary\obj\Debug\ResolveAssemblyReference.cache
+c:\myprojects\GuestBook\MongoLibrary\obj\Debug\MongoLibrary.dll
+c:\myprojects\GuestBook\MongoLibrary\obj\Debug\MongoLibrary.pdb
