@@ -221,3 +221,4 @@ obj
 bin
 /MongoLibrary/obj
 /MongoLibrary/bin
+/*.suo
