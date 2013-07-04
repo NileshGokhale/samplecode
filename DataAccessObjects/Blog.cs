@@ -20,6 +20,8 @@ namespace DTO
         public string Text { get; set; }
         [BsonDateTimeOptions(DateOnly = true)]
         public DateTime DateAdded { get; set; }
+        [DisplayName("Category")]
+        public string Category { get; set; }
         [BsonIgnore]
         public int Year { get { return DateAdded.Year; } }
         [BsonIgnore]

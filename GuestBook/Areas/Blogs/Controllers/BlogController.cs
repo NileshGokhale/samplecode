@@ -45,6 +45,12 @@ namespace GuestBook.Areas.Blogs.Controllers
         [ValidateInput(false)]
         public ActionResult Create(Blog model)
         {
+            if (ModelState.IsValid)
+            {
+                model.DateAdded = DateTime.Now;
+                _blogRepository.Add(model);
+                return RedirectToAction("Archive", "Blog", new { area = "Blogs" });
+            }
             return View();
         }
     }
