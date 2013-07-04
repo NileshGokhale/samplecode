@@ -1,0 +1,26 @@
+﻿//TO install oauth package
+Install-Package DotNetOpenAuth -Version 4.3.1.13153
+
+//Uninstall oauth package
+UnInstall-Package DotNetOpenAuth.OpenIdInfoCard.UI
+UnInstall-Package DotNetOpenAuth.InfoCard.UI
+UnInstall-Package DotNetOpenAuth.OpenId.Provider.UI
+UnInstall-Package DotNetOpenAuth.OpenId.RelyingParty.UI
+UnInstall-Package DotNetOpenAuth.OpenId.Core.UI
+UnInstall-Package DotNetOpenAuth.Core.UI
+UnInstall-Package DotNetOpenAuth.InfoCard
+UnInstall-Package DotNetOpenAuth.OpenIdOAuth
+UnInstall-Package DotNetOpenAuth.OAuth.ServiceProvider
+UnInstall-Package DotNetOpenAuth.OAuth2.ResourceServer
+UnInstall-Package DotNetOpenAuth.OAuth.Common
+UnInstall-Package DotNetOpenAuth.OAuth.Consumer
+UnInstall-Package DotNetOpenAuth.OAuth.Core
+UnInstall-Package DotNetOpenAuth.OAuth2.AuthorizationServer
+UnInstall-Package DotNetOpenAuth.OAuth2.Client.UI
+UnInstall-Package DotNetOpenAuth.OAuth2.Client
+UnInstall-Package DotNetOpenAuth.OAuth2.ClientAuthorization
+UnInstall-Package DotNetOpenAuth.OAuth2.Core
+UnInstall-Package DotNetOpenAuth.OpenId.Provider
+UnInstall-Package DotNetOpenAuth.OpenId.RelyingParty
+UnInstall-Package DotNetOpenAuth.OpenId.Core
+UnInstall-Package DotNetOpenAuth.Core
