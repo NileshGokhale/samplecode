@@ -217,3 +217,7 @@ pip-log.txt
 /DataAccessObjects/obj
 obj
 bin
+obj
+bin
+/MongoLibrary/obj
+/MongoLibrary/bin
