@@ -1,29 +1,26 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Security.Cryptography;
 
 namespace GuestBook.Security
 {
     public class PasswordHash
     {
-        private const int SALT_BYTE_SIZE = 24;
-        private const int HASH_BYTE_SIZE = 24;
-        public const int PBKDF2_ITERATIONS = 1000;
+        private const int SaltByteSize = 24;
+        private const int HashByteSize = 24;
+        public const int Pbkdf2Iterations = 1000;
 
-        public const int ITERATION_INDEX = 0;
-        public const int SALT_INDEX = 1;
-        public const int PBKDF2_INDEX = 2;
+        public const int IterationIndex = 0;
+        public const int SaltIndex = 1;
+        public const int Pbkdf2Index = 2;
 
         public static string CreateHash(string password)
         {
-            var csprng = System.Security.Cryptography.RNGCryptoServiceProvider.Create();
-            byte[] salt = new byte[SALT_BYTE_SIZE];
+            var csprng = RandomNumberGenerator.Create();
+            var salt = new byte[SaltByteSize];
             csprng.GetBytes(salt);
 
-            byte[] hash = PBKFD2(password, salt, PBKDF2_ITERATIONS, HASH_BYTE_SIZE);
-            return PBKDF2_ITERATIONS + ":" +
+            byte[] hash = Pbkfd2(password, salt, Pbkdf2Iterations, HashByteSize);
+            return Pbkdf2Iterations + ":" +
                 Convert.ToBase64String(salt) + ":" +
                 Convert.ToBase64String(hash);
 
@@ -33,10 +30,10 @@ namespace GuestBook.Security
         {
             char[] delimiter = { ':' };
             string[] split = correctHash.Split(delimiter);
-            int iterations = Int32.Parse(split[ITERATION_INDEX]);
-            byte[] salt = Convert.FromBase64String(split[SALT_INDEX]);
-            byte[] hash = Convert.FromBase64String(split[PBKDF2_INDEX]);
-            byte[] testHash = PBKFD2(password, salt, iterations, hash.Length);
+            int iterations = Int32.Parse(split[IterationIndex]);
+            byte[] salt = Convert.FromBase64String(split[SaltIndex]);
+            byte[] hash = Convert.FromBase64String(split[Pbkdf2Index]);
+            byte[] testHash = Pbkfd2(password, salt, iterations, hash.Length);
             return SlowEquals(hash, testHash);
         }
 
@@ -50,10 +47,9 @@ namespace GuestBook.Security
             return diff == 0;
         }
 
-        private static byte[] PBKFD2(string password, byte[] salt, int iterations, int outputBytes)
+        private static byte[] Pbkfd2(string password, byte[] salt, int iterations, int outputBytes)
         {
-            Rfc2898DeriveBytes pbkdf2 = new Rfc2898DeriveBytes(password, salt);
-            pbkdf2.IterationCount = iterations;
+            var pbkdf2 = new Rfc2898DeriveBytes(password, salt) {IterationCount = iterations};
             return pbkdf2.GetBytes(outputBytes);
         }
     }
