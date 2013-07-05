@@ -45,7 +45,7 @@ namespace GuestBook.Controllers
                 var user = _userRepository.Get(x => x.UserName == loginModel.UserName).SingleOrDefault();
                 if (user != null && PasswordHash.ValidatePassword(loginModel.Password, user.Password))
                 {
-                    Security.FormsAuthHelper.SetAuthTicket(loginModel.UserName);
+                    Security.FormsAuthHelper.SetAuthTicket(user, HttpContext);
                     return RedirectToAction("Index", "Home");
                 }
                 else
