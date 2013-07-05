@@ -16,6 +16,7 @@
     <div class="float-right">
         <section id="login">
             Hello, <span class="username">@(string.IsNullOrEmpty(User.Identity.Name) ? "Guest" : User.Identity.Name)</span>!
+            
             @if (User.Identity == null || string.IsNullOrEmpty(User.Identity.Name))
             {
             <div>@Html.ActionLink("Login", "Login", "Account")</div>
@@ -26,7 +27,7 @@
         </nav>
     </div>
     <div id="body">
-    @RenderSection("featured", required: false)
+        @RenderSection("featured", required: false)
         <section class="content-wrapper main-content">
             @RenderBody()
         </section>

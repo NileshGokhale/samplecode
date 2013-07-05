@@ -31,22 +31,22 @@ namespace GuestBook
 
         protected void Application_AuthenticateRequest(object sender, EventArgs e)
         {
-            HttpCookie authCookie = Context.Request.Cookies[FormsAuthentication.FormsCookieName];
-            if (authCookie == null || authCookie.Value == string.Empty)
-                return;
+            //HttpCookie authCookie = Context.Request.Cookies[FormsAuthentication.FormsCookieName];
+            //if (authCookie == null || authCookie.Value == string.Empty)
+            //    return;
 
-            FormsAuthenticationTicket ticket;
-            try
-            {
-                ticket = FormsAuthentication.Decrypt(authCookie.Value);
-                JavaScriptSerializer serializer = new JavaScriptSerializer();
-                CustomPrincipal principal = serializer.Deserialize<CustomPrincipal>(ticket.UserData);
-                HttpContext.Current.User = principal;
-            }
-            catch
-            {
-                return;
-            }
+            //FormsAuthenticationTicket ticket;
+            //try
+            //{
+            //    ticket = FormsAuthentication.Decrypt(authCookie.Value);
+            //    JavaScriptSerializer serializer = new JavaScriptSerializer();
+            //    CustomPrincipal principal = serializer.Deserialize<CustomPrincipal>(ticket.UserData);
+            //    HttpContext.Current.User = principal;
+            //}
+            //catch
+            //{
+            //    return;
+            //}
 
         }
 
@@ -62,9 +62,16 @@ namespace GuestBook
                 ticket = FormsAuthentication.Decrypt(authCookie.Value);
                 JavaScriptSerializer serializer = new JavaScriptSerializer();
                 CustomPrincipal principal = serializer.Deserialize<CustomPrincipal>(ticket.UserData);
-                HttpContext.Current.User = principal;
+                CustomPrincipal newUser = new CustomPrincipal(ticket.Name)
+                {
+                    FirstName = principal.FirstName,
+                    LastName = principal.LastName,
+                    UserId = principal.UserId
+                };
+
+                HttpContext.Current.User = newUser;
             }
-            catch
+            catch (Exception ex)
             {
                 return;
             }

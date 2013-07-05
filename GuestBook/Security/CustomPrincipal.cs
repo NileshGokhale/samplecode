@@ -8,6 +8,10 @@ namespace GuestBook.Security
 {
     public class CustomPrincipal : ICustomIdentity
     {
+        public CustomPrincipal()
+        {
+
+        }
         public CustomPrincipal(string userName)
         {
             this.Identity = new GenericIdentity(userName);
