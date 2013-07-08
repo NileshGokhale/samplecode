@@ -35,7 +35,12 @@ namespace MongoLibrary
 
         public List<T> Get(System.Linq.Expressions.Expression<Func<T, bool>> filter = null)
         {
-            return _uoW.Database.GetCollection<T>(_collectionName).AsQueryable().Where(filter).ToList();
+            IQueryable<T> query = dbSet.AsQueryable();
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+            return _uoW.Database.GetCollection<T>(_collectionName).AsQueryable().ToList();
         }
 
         public void Add(T entity)

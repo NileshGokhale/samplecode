@@ -24,16 +24,22 @@ namespace GuestBook.Areas.Blogs.Controllers
 
         public ActionResult Index()
         {
+
             return View();
         }
 
         public ActionResult Archive(string year, string month, int? dt)
         {
+            List<Blog> blogs = new List<Blog>();
             if (!string.IsNullOrEmpty(year))
             {
-                var blogs = _blogRepository.Get().ToList();
+                blogs = _blogRepository.Get().ToList();
             }
-            return View();
+            else
+            {
+                blogs = _blogRepository.Get().ToList();
+            }
+            return PartialView("_ArchivePartial", blogs);
         }
 
         [HttpGet]

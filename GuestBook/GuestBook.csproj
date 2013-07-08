@@ -318,6 +318,7 @@
     <Content Include="Areas\Blogs\Views\Blog\Index.cshtml" />
     <Content Include="Areas\Blogs\Views\Blog\Create.cshtml" />
     <Content Include="Areas\Blogs\Views\Blog\Archive.cshtml" />
+    <Content Include="Areas\Blogs\Views\Shared\_ArchivePartial.cshtml" />
     <None Include="readme.txt" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
@@ -328,7 +329,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Blogs\Models\" />
-    <Folder Include="Areas\Blogs\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DataAccessObjects\DataAccessObjects.csproj">

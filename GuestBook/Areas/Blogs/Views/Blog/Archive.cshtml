@@ -7,16 +7,12 @@
     Archive</h2>
 @{
     var blogList = Model as List<DTO.Blog>;
+    var years = blogList.GroupBy(x => x.Year);
 }
 @*Blog list for a particular year/month*@
-@if (Model != null && Model.Any())
-{
-    foreach (var item in Model)
+<ul>
+    @foreach (var item in years)
     {
-    <a>@item.Topic</a>
+        <li>@item</li>
     }
-}
-else
-{
-    <span>No one posted anything this month.</span>
-}
+</ul>
