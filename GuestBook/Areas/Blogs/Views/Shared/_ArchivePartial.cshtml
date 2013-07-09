@@ -1,1 +1,8 @@
-﻿
+﻿@model List<DTO.Blog>
+@{
+    var blog = Model.Select(x => x.Year).GroupBy(x => x);
+}
+@foreach (var item in blog)
+{
+    <span>@item</span>
+}

@@ -54,11 +54,16 @@ namespace GuestBook.Areas.Blogs.Controllers
         {
             if (ModelState.IsValid)
             {
-                model.DateAdded = DateTime.Parse(DateTime.Now.ToShortDateString());
+                model.DateAdded = DateTime.Now;
                 model.UserId = ((CustomPrincipal)HttpContext.User).UserId;
                 _blogRepository.Add(model);
                 return RedirectToAction("Archive", "Blog", new { area = "Blogs" });
             }
+            return View();
+        }
+
+        public ActionResult ViewBlogPost()
+        {
             return View();
         }
     }

@@ -319,6 +319,7 @@
     <Content Include="Areas\Blogs\Views\Blog\Create.cshtml" />
     <Content Include="Areas\Blogs\Views\Blog\Archive.cshtml" />
     <Content Include="Areas\Blogs\Views\Shared\_ArchivePartial.cshtml" />
+    <Content Include="Areas\Blogs\Views\Blog\ViewBlogPost.cshtml" />
     <None Include="readme.txt" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />

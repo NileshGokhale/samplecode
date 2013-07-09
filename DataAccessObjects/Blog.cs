@@ -18,7 +18,6 @@ namespace DTO
         [DisplayName("Detail")]
         [DataType(System.ComponentModel.DataAnnotations.DataType.MultilineText)]
         public string Text { get; set; }
-        [BsonDateTimeOptions(DateOnly = true)]
         public DateTime DateAdded { get; set; }
         [DisplayName("Category")]
         public string Category { get; set; }
