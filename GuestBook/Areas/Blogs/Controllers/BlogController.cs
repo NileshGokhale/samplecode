@@ -33,7 +33,8 @@ namespace GuestBook.Areas.Blogs.Controllers
             List<Blog> blogs = new List<Blog>();
             if (!string.IsNullOrEmpty(year))
             {
-                blogs = _blogRepository.Get().ToList();
+                int compareYear = Convert.ToInt32(year);
+                blogs = _blogRepository.Get(x => x.Year == compareYear).ToList();
             }
             else
             {

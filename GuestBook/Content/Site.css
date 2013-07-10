@@ -99,3 +99,14 @@ ol.codeblock li code
 	padding-left: 10px;
 	color:#0000a0;
 }
+
+.blogList
+{
+	text-align:center;
+}
+
+.blogList ul
+{
+	
+	list-style-type:none;
+}
