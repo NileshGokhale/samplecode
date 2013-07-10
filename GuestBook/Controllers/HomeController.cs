@@ -8,7 +8,7 @@ using DTO;
 
 namespace GuestBook.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         IGenericRepository<GuestBookEntry> _guestBookEntry;
         public HomeController(IGenericRepository<GuestBookEntry> guestBookEntry)

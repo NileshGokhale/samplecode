@@ -5,12 +5,13 @@ using System.Web;
 using System.Web.Mvc;
 using System.Diagnostics.Contracts;
 using GuestBook.Areas.Blogs.Models;
+using GuestBook.Controllers;
 using MongoLibrary;
 using DTO;
 using GuestBook.Security;
 namespace GuestBook.Areas.Blogs.Controllers
 {
-    public class BlogController : Controller
+    public class BlogController : BaseController
     {
         readonly IGenericRepository<Blog> _blogRepository;
 
@@ -25,7 +26,11 @@ namespace GuestBook.Areas.Blogs.Controllers
         public ActionResult Index()
         {
 
-            return View();
+            var model = new ArchiveViewModel
+                            {
+                                Blogs = GetBlogs(null, null, null)
+                            };
+            return View(model);
         }
 
         /// <summary>
@@ -38,28 +43,19 @@ namespace GuestBook.Areas.Blogs.Controllers
         public ActionResult Archive(string year, string month, int? dt)
         {
             var model = new ArchiveViewModel();
-            List<Blog> blogs;
+            List<Blog> blogs = GetBlogs(year, month, dt);
             if (!string.IsNullOrEmpty(year))
             {
-                var compareYear = Convert.ToInt32(year);
-                blogs = _blogRepository.Get(x => x.DateAdded.Year == compareYear).ToList();
                 model.ShowYear = true;
                 model.Blogs = blogs;
             }
             else if (!string.IsNullOrEmpty(month))
             {
-                var compareMonth = Convert.ToInt32(month);
-                blogs = _blogRepository.Get(x => x.DateAdded.Month == compareMonth).ToList();
                 model.ShowMonth = true;
-                model.Blogs = blogs;
             }
             else if (dt.HasValue)
             {
-                blogs = _blogRepository.Get(x => x.Day == dt.Value).ToList();
-            }
-            else
-            {
-                blogs = _blogRepository.Get().ToList();
+                model.ShowDay = true;
             }
             return PartialView("_ArchivePartial", model);
         }
@@ -87,6 +83,31 @@ namespace GuestBook.Areas.Blogs.Controllers
         public ActionResult ViewBlogPost()
         {
             return View();
+        }
+
+        private List<Blog> GetBlogs(string year, string month, int? day)
+        {
+            List<Blog> blogs;
+            if (!string.IsNullOrEmpty(year))
+            {
+                var compareYearFrom = new DateTime(Convert.ToInt32(year), 1, 1);
+                var compareYearTo = new DateTime(Convert.ToInt32(year), 12, 31);
+                blogs = _blogRepository.Get(x => x.DateAdded >= compareYearFrom && x.DateAdded <= compareYearTo).ToList();
+            }
+            else if (!string.IsNullOrEmpty(month))
+            {
+                var compareMonth = Convert.ToInt32(month);
+                blogs = _blogRepository.Get(x => x.DateAdded.Month == compareMonth).ToList();
+            }
+            else if (day.HasValue)
+            {
+                blogs = _blogRepository.Get(x => x.Day == day.Value).ToList();
+            }
+            else
+            {
+                blogs = _blogRepository.Get().ToList();
+            }
+            return blogs;
         }
     }
 }

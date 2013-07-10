@@ -1,4 +1,4 @@
-﻿@using System.Globalization
+﻿@model GuestBook.Areas.Blogs.Models.ArchiveViewModel
 @{                
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -6,7 +6,7 @@
 <script type="text/javascript">
     $(function () {
         $.ajax({
-            url: '@Url.Action("Archive", "Blog", new { area = "Blogs", year = DateTime.Now.Year.ToString(CultureInfo.InvariantCulture) })',
+            url: '@Url.Action("Archive", "Blog", new { area = "Blogs" })',
             type: 'GET',
             success: function (data) {
                 $("#archivePartial").html(data);
@@ -37,4 +37,7 @@
     bar, with the year you want and the site will show you if there are any blogs present
     in any of the months in that year.</div>
 <div id="archivePartial">
+    @{
+        Html.Partial("_ArchivePartial", Model);
+    }
 </div>

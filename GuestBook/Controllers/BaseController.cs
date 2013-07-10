@@ -7,6 +7,7 @@ using GuestBook.Helpers;
 
 namespace GuestBook.Controllers
 {
+    [Authorize]
     public abstract class BaseController : Controller
     {
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
@@ -17,10 +18,6 @@ namespace GuestBook.Controllers
             }
             base.OnActionExecuting(filterContext);
         }
-
-        protected void ClearAjaxRequest()
-        {
-            
-        }
+         
     }
 }
