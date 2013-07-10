@@ -1,7 +1,25 @@
-﻿@model List<DTO.Blog>
+﻿@using System.ComponentModel
+@model GuestBook.Areas.Blogs.Models.ArchiveViewModel
 @{
-    //var blog = Model.Select(x => x.Year).GroupBy(x => x);
+    IEnumerable<IGrouping<int, int>> blog = new BindingList<IGrouping<int, int>>();
+    if (Model.ShowYear)
+    {
+        blog = Model.Blogs.Select(x => x.Year).GroupBy(x => x);
+    }else if(Model.ShowMonth)
+    {
+        blog = Model.Blogs.Select(x => x.Month).GroupBy(x => x);
+    }
+    else if(Model.ShowDay)
+    {
+        blog = Model.Blogs.Select(x => x.Day).GroupBy(x => x);
+    }
 }
+<style type="text/css">
+    .float-right
+    {
+        float: right;
+    }
+</style>
 <script type="text/javascript">
     function showList(year, month, date) {
         debugger;
@@ -23,7 +41,7 @@
         <span>Blog Archive</span>
         <div>
             <ul>
-                @foreach (var item in Model)
+                @foreach (var item in blog)
                 {
                     <li><span><a href="#" onclick="javascript:showList('@item.Key')">@item.Key</a></span>
                     </li>

@@ -176,6 +176,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Blogs\BlogsAreaRegistration.cs" />
     <Compile Include="Areas\Blogs\Controllers\BlogController.cs" />
+    <Compile Include="Areas\Blogs\Models\ArchiveViewModel.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -263,7 +264,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Blogs\Models\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DataAccessObjects\DataAccessObjects.csproj">

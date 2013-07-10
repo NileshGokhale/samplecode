@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Diagnostics.Contracts;
-
+using GuestBook.Areas.Blogs.Models;
 using MongoLibrary;
 using DTO;
 using GuestBook.Security;
@@ -28,19 +28,36 @@ namespace GuestBook.Areas.Blogs.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Archives the specified year.
+        /// </summary>
+        /// <param name="year">The year.</param>
+        /// <param name="month">The month.</param>
+        /// <param name="dt">The dt.</param>
+        /// <returns></returns>
         public ActionResult Archive(string year, string month, int? dt)
         {
-            List<Blog> blogs = new List<Blog>();
+            var model = new ArchiveViewModel();
+            List<Blog> blogs;
             if (!string.IsNullOrEmpty(year))
             {
-                int compareYear = Convert.ToInt32(year);
+                var compareYear = Convert.ToInt32(year);
                 blogs = _blogRepository.Get(x => x.Year == compareYear).ToList();
+                model.ShowYear = true;
+                model.Blogs = blogs;
             }
-            else
+            else if (!string.IsNullOrEmpty(month))
             {
-                blogs = _blogRepository.Get().ToList();
+                var compareMonth = Convert.ToInt32(month);
+                blogs = _blogRepository.Get(x => x.Month == compareMonth).ToList();
+                model.ShowMonth = true;
+                model.Blogs = blogs;
             }
-            return PartialView("_ArchivePartial", blogs);
+            else if (dt.HasValue)
+            {
+                blogs = _blogRepository.Get(x => x.Day == dt.Value).ToList();
+            }
+            return PartialView("_ArchivePartial", model);
         }
 
         [HttpGet]
@@ -58,7 +75,7 @@ namespace GuestBook.Areas.Blogs.Controllers
                 model.DateAdded = DateTime.Now;
                 model.UserId = ((CustomPrincipal)HttpContext.User).UserId;
                 _blogRepository.Add(model);
-                return RedirectToAction("Archive", "Blog", new { area = "Blogs" });
+                return RedirectToAction("Index", "Blog", new { area = "Blogs" });
             }
             return View();
         }
