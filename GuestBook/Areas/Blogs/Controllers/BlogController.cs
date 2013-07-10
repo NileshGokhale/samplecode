@@ -7,6 +7,7 @@ using System.Diagnostics.Contracts;
 
 using MongoLibrary;
 using DTO;
+using GuestBook.Security;
 namespace GuestBook.Areas.Blogs.Controllers
 {
     public class BlogController : Controller
@@ -23,16 +24,23 @@ namespace GuestBook.Areas.Blogs.Controllers
 
         public ActionResult Index()
         {
+
             return View();
         }
 
         public ActionResult Archive(string year, string month, int? dt)
         {
+            List<Blog> blogs = new List<Blog>();
             if (!string.IsNullOrEmpty(year))
             {
-
+                int compareYear = Convert.ToInt32(year);
+                blogs = _blogRepository.Get(x => x.Year == compareYear).ToList();
             }
-            return View();
+            else
+            {
+                blogs = _blogRepository.Get().ToList();
+            }
+            return PartialView("_ArchivePartial", blogs);
         }
 
         [HttpGet]
@@ -48,9 +56,15 @@ namespace GuestBook.Areas.Blogs.Controllers
             if (ModelState.IsValid)
             {
                 model.DateAdded = DateTime.Now;
+                model.UserId = ((CustomPrincipal)HttpContext.User).UserId;
                 _blogRepository.Add(model);
                 return RedirectToAction("Archive", "Blog", new { area = "Blogs" });
             }
+            return View();
+        }
+
+        public ActionResult ViewBlogPost()
+        {
             return View();
         }
     }

@@ -9,6 +9,7 @@ using System.Web.Routing;
 using GuestBook.App_Start;
 using System.Web.Security;
 using GuestBook.Security;
+using System.Web.Script.Serialization;
 namespace GuestBook
 {
     // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
@@ -30,7 +31,28 @@ namespace GuestBook
 
         protected void Application_AuthenticateRequest(object sender, EventArgs e)
         {
-            HttpCookie authCookie = HttpContext.Current.Request.Cookies[FormsAuthentication.FormsCookieName];
+            //HttpCookie authCookie = Context.Request.Cookies[FormsAuthentication.FormsCookieName];
+            //if (authCookie == null || authCookie.Value == string.Empty)
+            //    return;
+
+            //FormsAuthenticationTicket ticket;
+            //try
+            //{
+            //    ticket = FormsAuthentication.Decrypt(authCookie.Value);
+            //    JavaScriptSerializer serializer = new JavaScriptSerializer();
+            //    CustomPrincipal principal = serializer.Deserialize<CustomPrincipal>(ticket.UserData);
+            //    HttpContext.Current.User = principal;
+            //}
+            //catch
+            //{
+            //    return;
+            //}
+
+        }
+
+        protected void Application_PostAuthenticateRequest(object sender, EventArgs e)
+        {
+            HttpCookie authCookie = Context.Request.Cookies[FormsAuthentication.FormsCookieName];
             if (authCookie == null || authCookie.Value == string.Empty)
                 return;
 
@@ -38,15 +60,21 @@ namespace GuestBook
             try
             {
                 ticket = FormsAuthentication.Decrypt(authCookie.Value);
+                JavaScriptSerializer serializer = new JavaScriptSerializer();
+                CustomPrincipal principal = serializer.Deserialize<CustomPrincipal>(ticket.UserData);
+                CustomPrincipal newUser = new CustomPrincipal(ticket.Name)
+                {
+                    FirstName = principal.FirstName,
+                    LastName = principal.LastName,
+                    UserId = principal.UserId
+                };
+
+                HttpContext.Current.User = newUser;
             }
-            catch
+            catch (Exception ex)
             {
                 return;
             }
-
-            if (HttpContext.Current.User != null)
-                HttpContext.Current.User = new CustomPrincipal(HttpContext.Current.User.Identity, new[] { "" });
-
         }
     }
 }

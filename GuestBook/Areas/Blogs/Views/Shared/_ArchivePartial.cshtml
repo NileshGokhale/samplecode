@@ -1,0 +1,34 @@
+﻿@model List<DTO.Blog>
+@{
+    //var blog = Model.Select(x => x.Year).GroupBy(x => x);
+}
+<script type="text/javascript">
+    function showList(year, month, date) {
+        debugger;
+        if (year) {
+            var postData = { year: year };
+            var getUrl = '@Url.Action("Archive", "Blog")';
+            $.ajax({
+                url: getUrl,
+                type: 'POST',
+                data: postData,
+                success: function (data) {
+                }
+            });
+        }
+    }
+</script>
+<div id="blogArchive">
+    <div class="float-right blogList">
+        <span>Blog Archive</span>
+        <div>
+            <ul>
+                @foreach (var item in Model)
+                {
+                    <li><span><a href="#" onclick="javascript:showList('@item.Key')">@item.Key</a></span>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>

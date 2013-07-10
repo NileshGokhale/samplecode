@@ -1,0 +1,12 @@
+﻿@model DTO.Blog
+@{
+    ViewBag.Title = "ViewBlogPost";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>
+    ViewBlogPost</h2>
+<div id="topic">
+    @Html.LabelFor(x => x.Topic)</div>
+<div id="text">
+    @Html.LabelFor(x => x.Text)
+</div>
