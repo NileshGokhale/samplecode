@@ -12,11 +12,11 @@ namespace GuestBook.Areas.Blogs.Controllers
 {
     public class BlogController : Controller
     {
-        IGenericRepository<Blog> _blogRepository;
+        readonly IGenericRepository<Blog> _blogRepository;
 
-        public BlogController(IGenericRepository<Blog> _blogRepository)
+        public BlogController(IGenericRepository<Blog> blogRepository)
         {
-            this._blogRepository = _blogRepository;
+            this._blogRepository = blogRepository;
         }
 
         //
@@ -42,20 +42,24 @@ namespace GuestBook.Areas.Blogs.Controllers
             if (!string.IsNullOrEmpty(year))
             {
                 var compareYear = Convert.ToInt32(year);
-                blogs = _blogRepository.Get(x => x.Year == compareYear).ToList();
+                blogs = _blogRepository.Get(x => x.DateAdded.Year == compareYear).ToList();
                 model.ShowYear = true;
                 model.Blogs = blogs;
             }
             else if (!string.IsNullOrEmpty(month))
             {
                 var compareMonth = Convert.ToInt32(month);
-                blogs = _blogRepository.Get(x => x.Month == compareMonth).ToList();
+                blogs = _blogRepository.Get(x => x.DateAdded.Month == compareMonth).ToList();
                 model.ShowMonth = true;
                 model.Blogs = blogs;
             }
             else if (dt.HasValue)
             {
                 blogs = _blogRepository.Get(x => x.Day == dt.Value).ToList();
+            }
+            else
+            {
+                blogs = _blogRepository.Get().ToList();
             }
             return PartialView("_ArchivePartial", model);
         }

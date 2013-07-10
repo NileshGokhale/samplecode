@@ -1,11 +1,12 @@
-﻿@{                
+﻿@using System.Globalization
+@{                
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <script type="text/javascript">
     $(function () {
         $.ajax({
-            url: '@Url.Action("Archive", "Blog")',
+            url: '@Url.Action("Archive", "Blog", new { area = "Blogs", year = DateTime.Now.Year.ToString(CultureInfo.InvariantCulture) })',
             type: 'GET',
             success: function (data) {
                 $("#archivePartial").html(data);
@@ -13,7 +14,7 @@
         });
     });
 </script>
-@if (User.Identity != null && !string.IsNullOrEmpty(User.Identity.Name))
+@if (!string.IsNullOrEmpty(User.Identity.Name))
 {
 @*@Html.ActionLink("Create blog", "Create", "Blog", new { area = "Blogs" }, null)*@
     <a href="@Url.Action("Create", "Blog", new { area = "Blogs" })">New</a>
