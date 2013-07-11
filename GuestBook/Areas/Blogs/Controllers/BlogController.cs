@@ -46,15 +46,18 @@ namespace GuestBook.Areas.Blogs.Controllers
             model.Blogs = GetBlogs(year, month, dt);
             if (!string.IsNullOrEmpty(year))
             {
-                model.ShowYear = true;
+                model.ShowMonth = true;
             }
             else if (!string.IsNullOrEmpty(month))
             {
-                model.ShowMonth = true;
+                model.ShowDay = true;
             }
             else if (dt.HasValue)
             {
                 model.ShowDay = true;
+            }else
+            {
+                model.ShowYear = true;
             }
             return PartialView("_ArchivePartial", model);
         }

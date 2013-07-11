@@ -13,6 +13,22 @@
             }
         });
     });
+    
+    function showList(year, month, date) {
+        debugger;
+        if (year) {
+            var postData = { year: year };
+            var getUrl = '@Url.Action("Archive", "Blog")';
+            $.ajax({
+                url: getUrl,
+                type: 'POST',
+                data: postData,
+                success: function (data) {
+                    debugger;
+                }
+            });
+        }
+    }
 </script>
 @if (!string.IsNullOrEmpty(User.Identity.Name))
 {

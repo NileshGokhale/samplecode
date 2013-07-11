@@ -1,16 +1,20 @@
 @model GuestBook.Areas.Blogs.Models.ArchiveViewModel
-@using System.ComponentModel
+@using System.Globalization
+@using DTO
 @{
-    IEnumerable<IGrouping<int, int>> blog = new BindingList<IGrouping<int, int>>();
+    List<Blog> blog;
+    IEnumerable<int> period;
     if (Model.ShowMonth)
     {
-        blog = Model.Blogs.Select(x => x.Month).GroupBy(x => x);
+        period = Model.Blogs.Select(x => x.Month).ToList().Distinct();
     }
     else if (Model.ShowDay)
     {
-        blog = Model.Blogs.Select(x => x.Day).GroupBy(x => x);
-    }else{
-        blog = Model.Blogs.Select(x => x.Year).GroupBy(x => x);   
+        period = Model.Blogs.Select(x => x.Day).ToList().Distinct();
+    }
+    else
+    {
+        period = Model.Blogs.Select(x => x.Year).ToList().Distinct();
     }
 }
 <style type="text/css">
@@ -20,30 +24,17 @@
     }
 </style>
 <script type="text/javascript">
-    function showList(year, month, date) {
-        debugger;
-        if (year) {
-            var postData = { year: year };
-            var getUrl = '@Url.Action("Archive", "Blog")';
-            $.ajax({
-                url: getUrl,
-                type: 'POST',
-                data: postData,
-                success: function (data) {
-                }
-            });
-        }
-    }
+    
 </script>
 <div id="blogArchive">
     <div class="float-right blogList">
         <span>Blog Archive</span>
         <div>
             <ul>
-                @foreach (var item in blog)
+                @foreach (var item in period)
                 {
-                    <li><span><a href="#" onclick="javascript:showList('@item.Key')">@item.Key</a></span>
-                    </li>
+                    string param = "'" + (Model.ShowYear ? item.ToString(CultureInfo.InvariantCulture) : null) + "','" + (Model.ShowMonth ? item.ToString(CultureInfo.InvariantCulture) : null) + "'," + (Model.ShowDay ? item.ToString(CultureInfo.InvariantCulture) : null);
+                    <li><span><a href="#" onclick="javascript:showList(@param)">@item</a> </span></li>
                 }
             </ul>
         </div>
