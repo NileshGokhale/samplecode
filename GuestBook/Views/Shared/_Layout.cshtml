@@ -11,6 +11,20 @@
     <script src="../../Scripts/mvcfoolproof.unobtrusive.min.js" type="text/javascript"></script>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <script type="text/javascript">
+        $(function () {
+            var i = window.setInterval(hasAjaxRequest, 10000);
+        });
+        function hasAjaxRequest() {
+            $.ajax({
+                url: '@Url.Action("HasAjaxRequest", "Base")',
+                type: 'GET',
+                success: function () {
+                    debugger;
+                }
+            });
+        }
+    </script>
 </head>
 <body>
     <div class="float-right">
@@ -39,7 +53,7 @@
                 </div>
             </div>
         </footer>
-        @RenderSection("Scripts", required: false);
+    @RenderSection("Scripts", required: false);
 </body>
 @*<body>
         <header>

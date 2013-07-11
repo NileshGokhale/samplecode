@@ -58,4 +58,40 @@ namespace GuestBook.Helpers
             return ConfigurationManager.AppSettings.Get(key);
         }
     }
+
+    /// <summary>
+    /// Session helper class to manipulate session values
+    /// </summary>
+    public static class SessionHelper
+    {
+        /// <summary>
+        /// The ajax request session variable
+        /// </summary>
+        private const string AjaxRequestSessionVariable = "AjaxRequestData";
+        /// <summary>
+        /// Gets a value indicating whether this instance has ajax request.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this instance has ajax request; otherwise, <c>false</c>.
+        /// </value>
+        public static bool HasAjaxRequest { get { return string.IsNullOrEmpty(AjaxRequest); } }
+        /// <summary>
+        /// Gets or sets the ajax request.
+        /// </summary>
+        /// <value>
+        /// The ajax request.
+        /// </value>
+        public static string AjaxRequest
+        {
+            get
+            {
+                if (HttpContext.Current.Session[AjaxRequestSessionVariable] != null)
+                {
+                    return HttpContext.Current.Session[AjaxRequestSessionVariable].ToString();
+                }
+                return string.Empty;
+            }
+            set { HttpContext.Current.Session[AjaxRequestSessionVariable] = value; }
+        }
+    }
 }

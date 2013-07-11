@@ -33,6 +33,11 @@ namespace MongoLibrary
             return doc;
         }
 
+        /// <summary>
+        /// Gets the specified filter.
+        /// </summary>
+        /// <param name="filter">The filter.</param>
+        /// <returns>[cref]</returns>
         public List<T> Get(System.Linq.Expressions.Expression<Func<T, bool>> filter = null)
         {
             IQueryable<T> query = dbSet.AsQueryable();
@@ -40,7 +45,7 @@ namespace MongoLibrary
             {
                 query = query.Where(filter);
             }
-            return _uoW.Database.GetCollection<T>(_collectionName).AsQueryable().ToList();
+            return query.ToList();
         }
 
         public void Add(T entity)
@@ -81,10 +86,8 @@ namespace MongoLibrary
             var cnt = counters.Find(query);
             if (!cnt.Any())
             {
-                BsonDocument document = new BsonDocument();
-                Dictionary<string, object> element = new Dictionary<string, object>();
-                element.Add(collectionId, collectionId);
-                element.Add("value", 0);
+                var document = new BsonDocument();
+                var element = new Dictionary<string, object> { { collectionId, collectionId }, { "value", 0 } };
                 document.AddRange(element);
                 counters.Insert(document);
             }
@@ -97,7 +100,6 @@ namespace MongoLibrary
                 {
                     retVal = val.ToInt32();
                     retVal += 1;
-                    val = retVal;
                 }
                 var update = Update.Set("value", retVal);
                 counters.Update(query, update);

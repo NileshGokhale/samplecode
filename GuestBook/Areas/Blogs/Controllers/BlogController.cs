@@ -4,19 +4,20 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Diagnostics.Contracts;
-
+using GuestBook.Areas.Blogs.Models;
+using GuestBook.Controllers;
 using MongoLibrary;
 using DTO;
 using GuestBook.Security;
 namespace GuestBook.Areas.Blogs.Controllers
 {
-    public class BlogController : Controller
+    public class BlogController : BaseController
     {
-        IGenericRepository<Blog> _blogRepository;
+        readonly IGenericRepository<Blog> _blogRepository;
 
-        public BlogController(IGenericRepository<Blog> _blogRepository)
+        public BlogController(IGenericRepository<Blog> blogRepository)
         {
-            this._blogRepository = _blogRepository;
+            this._blogRepository = blogRepository;
         }
 
         //
@@ -25,22 +26,37 @@ namespace GuestBook.Areas.Blogs.Controllers
         public ActionResult Index()
         {
 
-            return View();
+            var model = new ArchiveViewModel
+                            {
+                                Blogs = GetBlogs(null, null, null)
+                            };
+            return View(model);
         }
 
+        /// <summary>
+        /// Archives the specified year.
+        /// </summary>
+        /// <param name="year">The year.</param>
+        /// <param name="month">The month.</param>
+        /// <param name="dt">The dt.</param>
+        /// <returns></returns>
         public ActionResult Archive(string year, string month, int? dt)
         {
-            List<Blog> blogs = new List<Blog>();
+            var model = new ArchiveViewModel();
+            model.Blogs = GetBlogs(year, month, dt);
             if (!string.IsNullOrEmpty(year))
             {
-                int compareYear = Convert.ToInt32(year);
-                blogs = _blogRepository.Get(x => x.Year == compareYear).ToList();
+                model.ShowYear = true;
             }
-            else
+            else if (!string.IsNullOrEmpty(month))
             {
-                blogs = _blogRepository.Get().ToList();
+                model.ShowMonth = true;
             }
-            return PartialView("_ArchivePartial", blogs);
+            else if (dt.HasValue)
+            {
+                model.ShowDay = true;
+            }
+            return PartialView("_ArchivePartial", model);
         }
 
         [HttpGet]
@@ -58,7 +74,7 @@ namespace GuestBook.Areas.Blogs.Controllers
                 model.DateAdded = DateTime.Now;
                 model.UserId = ((CustomPrincipal)HttpContext.User).UserId;
                 _blogRepository.Add(model);
-                return RedirectToAction("Archive", "Blog", new { area = "Blogs" });
+                return RedirectToAction("Index", "Blog", new { area = "Blogs" });
             }
             return View();
         }
@@ -66,6 +82,31 @@ namespace GuestBook.Areas.Blogs.Controllers
         public ActionResult ViewBlogPost()
         {
             return View();
+        }
+
+        private List<Blog> GetBlogs(string year, string month, int? day)
+        {
+            List<Blog> blogs;
+            if (!string.IsNullOrEmpty(year))
+            {
+                var compareYearFrom = new DateTime(Convert.ToInt32(year), 1, 1);
+                var compareYearTo = new DateTime(Convert.ToInt32(year), 12, 31);
+                blogs = _blogRepository.Get(x => x.DateAdded >= compareYearFrom && x.DateAdded <= compareYearTo).ToList();
+            }
+            else if (!string.IsNullOrEmpty(month))
+            {
+                var compareMonth = Convert.ToInt32(month);
+                blogs = _blogRepository.Get(x => x.DateAdded.Month == compareMonth).ToList();
+            }
+            else if (day.HasValue)
+            {
+                blogs = _blogRepository.Get(x => x.Day == day.Value).ToList();
+            }
+            else
+            {
+                blogs = _blogRepository.Get().ToList();
+            }
+            return blogs;
         }
     }
 }

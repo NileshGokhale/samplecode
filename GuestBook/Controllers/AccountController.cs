@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using GuestBook.Helpers;
 using MongoLibrary;
 using DTO;
 using GuestBook.Models;
@@ -12,9 +13,9 @@ using System.Configuration;
 
 namespace GuestBook.Controllers
 {
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
-        IGenericRepository<User> _userRepository;
+        readonly IGenericRepository<User> _userRepository;
         //
         // GET: /Account/
 
@@ -144,6 +145,12 @@ namespace GuestBook.Controllers
         public PartialViewResult RegisterPartial()
         {
             return PartialView("_RegisterPartial");
+        }
+
+        [HttpGet]
+        public bool HasAjaxRequest()
+        {
+            return SessionHelper.HasAjaxRequest;
         }
     }
 }

@@ -6,6 +6,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using DTO;
 using GuestBook.App_Start;
 using System.Web.Security;
 using GuestBook.Security;
@@ -60,14 +61,9 @@ namespace GuestBook
             try
             {
                 ticket = FormsAuthentication.Decrypt(authCookie.Value);
-                JavaScriptSerializer serializer = new JavaScriptSerializer();
-                CustomPrincipal principal = serializer.Deserialize<CustomPrincipal>(ticket.UserData);
-                CustomPrincipal newUser = new CustomPrincipal(ticket.Name)
-                {
-                    FirstName = principal.FirstName,
-                    LastName = principal.LastName,
-                    UserId = principal.UserId
-                };
+                var serializer = new JavaScriptSerializer();
+                var user = serializer.Deserialize<User>(ticket.UserData);
+                CustomPrincipal newUser = FormsAuthHelper.GetPrincipal(user);
 
                 HttpContext.Current.User = newUser;
             }

@@ -39,11 +39,11 @@ namespace MongoLibrary
 
         public UnitOfWork()
         {
-            var dbName = "GuestBook";
-            var connectionString = "mongodb://localhost"; //TODO:USer App setting helper
+            const string dbName = "GuestBook";
+            const string connectionString = "mongodb://localhost"; //TODO:USer App setting helper
             var client = new MongoClient(connectionString);
             var server = client.GetServer();
-            MongoDatabaseSettings settings = new MongoDatabaseSettings();
+            var settings = new MongoDatabaseSettings();
             _database = server.GetDatabase(dbName, settings);//TODO:User app sertting helper
         }
 
