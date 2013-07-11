@@ -1,6 +1,6 @@
-﻿@model List<DTO.Blog>
+﻿@model GuestBook.Areas.Blogs.Models.ArchiveViewModel
 @{
-    //var blog = Model.Select(x => x.Year).GroupBy(x => x);
+    
 }
 <script type="text/javascript">
     function showList(year, month, date) {
@@ -23,7 +23,7 @@
         <span>Blog Archive</span>
         <div>
             <ul>
-                @foreach (var item in Model)
+                @foreach (var item in Model.Blogs)
                 {
                     <li><span><a href="#" onclick="javascript:showList('@item.Key')">@item.Key</a></span>
                     </li>
