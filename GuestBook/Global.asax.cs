@@ -1,22 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using DTO;
-using GuestBook.App_Start;
+using DataAccessObjects;
 using System.Web.Security;
 using GuestBook.Security;
 using System.Web.Script.Serialization;
+
 namespace GuestBook
 {
     // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
     // visit http://go.microsoft.com/?LinkId=9394801
 
-    public class MvcApplication : System.Web.HttpApplication
+    /// <summary>
+    /// App start
+    /// </summary>
+    public class MvcApplication : HttpApplication
     {
         protected void Application_Start()
         {
@@ -30,6 +31,11 @@ namespace GuestBook
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
 
+        /// <summary>
+        /// Handles the AuthenticateRequest event of the Application control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         protected void Application_AuthenticateRequest(object sender, EventArgs e)
         {
             //HttpCookie authCookie = Context.Request.Cookies[FormsAuthentication.FormsCookieName];
@@ -51,6 +57,11 @@ namespace GuestBook
 
         }
 
+        /// <summary>
+        /// Handles the PostAuthenticateRequest event of the Application control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         protected void Application_PostAuthenticateRequest(object sender, EventArgs e)
         {
             HttpCookie authCookie = Context.Request.Cookies[FormsAuthentication.FormsCookieName];

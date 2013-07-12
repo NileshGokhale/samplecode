@@ -1,8 +1,8 @@
 @model GuestBook.Areas.Blogs.Models.ArchiveViewModel
 @using System.Globalization
 @using DTO
+@using DataAccessObjects
 @{
-    List<Blog> blog;
     IEnumerable<int> period;
     if (Model.ShowMonth)
     {

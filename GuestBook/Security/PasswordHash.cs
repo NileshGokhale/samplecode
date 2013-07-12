@@ -3,6 +3,9 @@ using System.Security.Cryptography;
 
 namespace GuestBook.Security
 {
+    /// <summary>
+    /// Class creates password hash.
+    /// </summary>
     public class PasswordHash
     {
         private const int SaltByteSize = 24;
@@ -13,6 +16,11 @@ namespace GuestBook.Security
         public const int SaltIndex = 1;
         public const int Pbkdf2Index = 2;
 
+        /// <summary>
+        /// Creates the hash.
+        /// </summary>
+        /// <param name="password">The password.</param>
+        /// <returns></returns>
         public static string CreateHash(string password)
         {
             var csprng = RandomNumberGenerator.Create();
@@ -26,6 +34,12 @@ namespace GuestBook.Security
 
         }
 
+        /// <summary>
+        /// Validates the password.
+        /// </summary>
+        /// <param name="password">The password.</param>
+        /// <param name="correctHash">The correct hash.</param>
+        /// <returns></returns>
         public static bool ValidatePassword(string password, string correctHash)
         {
             char[] delimiter = { ':' };
@@ -37,6 +51,12 @@ namespace GuestBook.Security
             return SlowEquals(hash, testHash);
         }
 
+        /// <summary>
+        /// Slows the equals.
+        /// </summary>
+        /// <param name="a">A.</param>
+        /// <param name="b">The b.</param>
+        /// <returns></returns>
         private static bool SlowEquals(byte[] a, byte[] b)
         {
             uint diff = (uint)a.Length - (uint)b.Length;
@@ -47,6 +67,14 @@ namespace GuestBook.Security
             return diff == 0;
         }
 
+        /// <summary>
+        /// PBKFD2s the specified password.
+        /// </summary>
+        /// <param name="password">The password.</param>
+        /// <param name="salt">The salt.</param>
+        /// <param name="iterations">The iterations.</param>
+        /// <param name="outputBytes">The output bytes.</param>
+        /// <returns></returns>
         private static byte[] Pbkfd2(string password, byte[] salt, int iterations, int outputBytes)
         {
             var pbkdf2 = new Rfc2898DeriveBytes(password, salt) {IterationCount = iterations};

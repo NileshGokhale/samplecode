@@ -1,28 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using System.Diagnostics.Contracts;
+using DataAccessObjects;
 using GuestBook.Areas.Blogs.Models;
 using GuestBook.Controllers;
 using MongoLibrary;
-using DTO;
 using GuestBook.Security;
 namespace GuestBook.Areas.Blogs.Controllers
 {
+    /// <summary>
+    /// Controller handles blog posts
+    /// </summary>
     public class BlogController : BaseController
     {
         readonly IGenericRepository<Blog> _blogRepository;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlogController"/> class.
+        /// </summary>
+        /// <param name="blogRepository">The blog repository.</param>
         public BlogController(IGenericRepository<Blog> blogRepository)
         {
-            this._blogRepository = blogRepository;
+            _blogRepository = blogRepository;
         }
 
-        //
-        // GET: /Blogs/Blog/
-
+        /// <summary>
+        /// Indexes this instance.
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Index()
         {
 
@@ -62,12 +68,21 @@ namespace GuestBook.Areas.Blogs.Controllers
             return PartialView("_ArchivePartial", model);
         }
 
+        /// <summary>
+        /// Creates this instance.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public ActionResult Create()
         {
             return View();
         }
 
+        /// <summary>
+        /// Creates the specified model.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateInput(false)]
         public ActionResult Create(Blog model)
@@ -82,11 +97,22 @@ namespace GuestBook.Areas.Blogs.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Views the blog post.
+        /// </summary>
+        /// <returns></returns>
         public ActionResult ViewBlogPost()
         {
             return View();
         }
 
+        /// <summary>
+        /// Gets the blogs.
+        /// </summary>
+        /// <param name="year">The year.</param>
+        /// <param name="month">The month.</param>
+        /// <param name="day">The day.</param>
+        /// <returns></returns>
         private List<Blog> GetBlogs(string year, string month, int? day)
         {
             List<Blog> blogs;

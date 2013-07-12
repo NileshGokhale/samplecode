@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace MongoLibrary
+﻿namespace MongoLibrary
 {
+    /// <summary>
+    /// Inter face for UnitofWork pattern
+    /// </summary>
     interface IUnitOfWork
     {
+        /// <summary>
+        /// Saves the changes.
+        /// </summary>
         void SaveChanges();
     }
 }

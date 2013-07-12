@@ -1,14 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using System.Web.Security;
-using DTO;
 using System.Web.Script.Serialization;
+using DataAccessObjects;
+
 namespace GuestBook.Security
 {
+    /// <summary>
+    /// Helper class for forms authenticatio
+    /// </summary>
     public static class FormsAuthHelper
     {
+        /// <summary>
+        /// Sets the auth ticket.
+        /// </summary>
+        /// <param name="user">The user.</param>
+        /// <param name="context">The context.</param>
         public static void SetAuthTicket(User user, HttpContextBase context)
         {
             var id = new System.Security.Principal.GenericIdentity(user.UserName);
@@ -24,12 +31,20 @@ namespace GuestBook.Security
             context.Response.Cookies.Add(faCookie);
         }
 
+        /// <summary>
+        /// Logouts this instance.
+        /// </summary>
         public static void Logout()
         {
             FormsAuthentication.SignOut();
             FormsAuthentication.RedirectToLoginPage();
         }
 
+        /// <summary>
+        /// Gets the principal.
+        /// </summary>
+        /// <param name="user">The user.</param>
+        /// <returns></returns>
         public static CustomPrincipal GetPrincipal(User user)
         {
             return new CustomPrincipal(user.UserName) { FirstName = user.FirstName, LastName = user.LastName, UserId = user.EntityId };

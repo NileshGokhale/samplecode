@@ -1,21 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using DataAccessObjects;
 using MongoDB.Bson;
 using MongoDB.Driver;
-using DTO;
 
 namespace MongoLibrary
 {
+    /// <summary>
+    /// Unit of work implementation
+    /// </summary>
     public class UnitOfWork : IUnitOfWork
     {
-        private MongoDatabase _database;
+        private readonly MongoDatabase _database;
         private GenericRepository<GuestBookEntry> _guestBookEntryRepository;
         private GenericRepository<Blog> _blogRepository;
 
         internal MongoDatabase Database { get { return _database; } }
-        
+
         #region Repositories
         public GenericRepository<Blog> BlogRepository
         {
@@ -28,15 +28,14 @@ namespace MongoLibrary
         {
             get
             {
-                if (_guestBookEntryRepository == null)
-                {
-                    _guestBookEntryRepository = new GenericRepository<GuestBookEntry>(this);
-                }
-                return _guestBookEntryRepository;
+                return _guestBookEntryRepository ?? (_guestBookEntryRepository = new GenericRepository<GuestBookEntry>(this));
             }
         }
         #endregion
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UnitOfWork"/> class.
+        /// </summary>
         public UnitOfWork()
         {
             const string dbName = "GuestBook";
@@ -49,12 +48,22 @@ namespace MongoLibrary
 
         #region IUnitOfWork Members
 
+        /// <summary>
+        /// Saves the changes.
+        /// </summary>
+        /// <exception cref="System.NotImplementedException"></exception>
         public void SaveChanges()
         {
             throw new NotImplementedException();
 
         }
 
+        /// <summary>
+        /// Gets the guest book entries.
+        /// </summary>
+        /// <value>
+        /// The guest book entries.
+        /// </value>
         public MongoCollection<BsonDocument> GuestBookEntries
         {
             get { return _database.GetCollection("GuestBookEntry"); }

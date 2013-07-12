@@ -1,14 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using System.Net.Mail;
 using System.Configuration;
 
 namespace GuestBook.Helpers
 {
+    /// <summary>
+    /// Class provides static Helper methods
+    /// </summary>
     public static class Helper
     {
+        /// <summary>
+        /// Sends the email.
+        /// </summary>
+        /// <param name="from">From.</param>
+        /// <param name="to">To.</param>
+        /// <param name="subject">The subject.</param>
+        /// <param name="messageBody">The message body.</param>
+        /// <param name="isHtml">if set to <c>true</c> [is HTML].</param>
+        /// <returns></returns>
         public static bool SendEmail(string from, string to, string subject, string messageBody, bool isHtml = true)
         {
             System.Diagnostics.Contracts.Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(from));
@@ -31,6 +41,11 @@ namespace GuestBook.Helpers
 
         }
 
+        /// <summary>
+        /// Gets the welcome email link.
+        /// </summary>
+        /// <param name="userName">Name of the user.</param>
+        /// <returns></returns>
         public static string GetWelcomeEmailLink(string userName)
         {
             var base64string = ToBase64(userName + "|" + DateTime.Now.ToLongDateString());
@@ -40,12 +55,22 @@ namespace GuestBook.Helpers
             return retval;
         }
 
+        /// <summary>
+        /// To the base64.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <returns></returns>
         public static string ToBase64(string value)
         {
             byte[] array = System.Text.Encoding.UTF8.GetBytes(value);
             return Convert.ToBase64String(array);
         }
 
+        /// <summary>
+        /// Froms the base64.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <returns></returns>
         public static string FromBase64(string value)
         {
             byte[] buff = Convert.FromBase64String(value);
@@ -53,6 +78,11 @@ namespace GuestBook.Helpers
             return retval;
         }
 
+        /// <summary>
+        /// Gets the value.
+        /// </summary>
+        /// <param name="key">The key.</param>
+        /// <returns></returns>
         public static string GetValue(string key)
         {
             return ConfigurationManager.AppSettings.Get(key);

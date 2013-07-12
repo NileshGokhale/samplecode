@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Security.Principal;
+﻿using System.Security.Principal;
 
 namespace GuestBook.Security
 {
+    /// <summary>
+    /// Interface used for custom principal
+    /// </summary>
     interface ICustomIdentity : IPrincipal
     {
         int UserId { get; set; }

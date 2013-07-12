@@ -1,3 +1,5 @@
+using DataAccessObjects;
+
 [assembly: WebActivator.PreApplicationStartMethod(typeof(GuestBook.App_Start.NinjectWebCommon), "Start")]
 [assembly: WebActivator.ApplicationShutdownMethodAttribute(typeof(GuestBook.App_Start.NinjectWebCommon), "Stop")]
 
@@ -12,8 +14,10 @@ namespace GuestBook.App_Start
     using Ninject.Web.Common;
 
     using MongoLibrary;
-    using DTO;
 
+    /// <summary>
+    /// 
+    /// </summary>
     public static class NinjectWebCommon 
     {
         private static readonly Bootstrapper bootstrapper = new Bootstrapper();
