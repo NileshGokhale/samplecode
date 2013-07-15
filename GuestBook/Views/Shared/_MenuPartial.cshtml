@@ -3,6 +3,12 @@
     <li>@Html.ActionLink("About", "About", "Home", new { area = "" }, null)</li>
     <li>@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, null)</li>
     <li>@Html.ActionLink("Blogs", "Index", "Blog", new { area = "Blogs" }, null)</li>
+    <li>
+        <a href="#" onmouseover="showMenu(this);">Topics</a>
+        <ul class="submenu">
+            <li>Security</li>
+        </ul>
+    </li>
     @if (Context.User != null && string.IsNullOrEmpty(Context.User.Identity.Name))
     {
         <li>@Html.ActionLink("Register", "Register", "Account", new { area = "" }, null)</li>     
