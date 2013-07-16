@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using DataAccessObjects;
@@ -32,10 +31,7 @@ namespace GuestBook.Areas.Blogs.Controllers
         public ActionResult Index()
         {
 
-            var model = new ArchiveViewModel
-                            {
-                                Blogs = GetBlogs(null, null, null)
-                            };
+            var model = GetBlogs(null, null, null);
             return View(model);
         }
 
@@ -48,23 +44,7 @@ namespace GuestBook.Areas.Blogs.Controllers
         /// <returns></returns>
         public ActionResult Archive(string year, string month, int? dt)
         {
-            var model = new ArchiveViewModel();
-            model.Blogs = GetBlogs(year, month, dt);
-            if (!string.IsNullOrEmpty(year))
-            {
-                model.ShowMonth = true;
-            }
-            else if (!string.IsNullOrEmpty(month))
-            {
-                model.ShowDay = true;
-            }
-            else if (dt.HasValue)
-            {
-                model.ShowDay = true;
-            }else
-            {
-                model.ShowYear = true;
-            }
+            var model = GetBlogs(year, month, dt);
             return PartialView("_ArchivePartial", model);
         }
 
@@ -113,29 +93,45 @@ namespace GuestBook.Areas.Blogs.Controllers
         /// <param name="month">The month.</param>
         /// <param name="day">The day.</param>
         /// <returns></returns>
-        private List<Blog> GetBlogs(string year, string month, int? day)
+        private ArchiveViewModel GetBlogs(string year, string month, int? day)
         {
-            List<Blog> blogs;
+            var model = new ArchiveViewModel(); 
+            if (!string.IsNullOrEmpty(year))
+            {
+                model.ShowMonth = true;
+            }
+            else if (!string.IsNullOrEmpty(month))
+            {
+                model.ShowDay = true;
+            }
+            else if (day.HasValue)
+            {
+                model.ShowDay = true;
+            }
+            else
+            {
+                model.ShowYear = true;
+            } 
             if (!string.IsNullOrEmpty(year))
             {
                 var compareYearFrom = new DateTime(Convert.ToInt32(year), 1, 1);
                 var compareYearTo = new DateTime(Convert.ToInt32(year), 12, 31);
-                blogs = _blogRepository.Get(x => x.DateAdded >= compareYearFrom && x.DateAdded <= compareYearTo).ToList();
+                model.Blogs = _blogRepository.Get(x => x.DateAdded >= compareYearFrom && x.DateAdded <= compareYearTo).ToList();
             }
             else if (!string.IsNullOrEmpty(month))
             {
                 var compareMonth = Convert.ToInt32(month);
-                blogs = _blogRepository.Get(x => x.DateAdded.Month == compareMonth).ToList();
+                model.Blogs = _blogRepository.Get(x => x.DateAdded.Month == compareMonth).ToList();
             }
             else if (day.HasValue)
             {
-                blogs = _blogRepository.Get(x => x.Day == day.Value).ToList();
+                model.Blogs = _blogRepository.Get(x => x.Day == day.Value).ToList();
             }
             else
             {
-                blogs = _blogRepository.Get().ToList();
+                model.Blogs = _blogRepository.Get().ToList();
             }
-            return blogs;
+            return model;
         }
     }
 }

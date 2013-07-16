@@ -3,30 +3,31 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @section featured {
-    <section class="featured">
-    
+    <article>
+<section class="featured">
+    <p>
+        Welcome @(User.Identity != null && !string.IsNullOrEmpty(User.Identity.Name) ? User.Identity.Name : "Guest"),
         <p>
-            Welcome @(User.Identity != null && !string.IsNullOrEmpty(User.Identity.Name) ? User.Identity.Name : "Guest"),
-            <p>
-                You know if you can see your name next to welcome you must be registered with this
-                site. If not then the site must be<br />
-                welcoming you as a "Guest".</p>
-            <p>
-                Ok that was obvious, if you are not registered to any site you would be treated
-                as a Guest. So whats different in this site?<br />
-            </p>
-            <p>
-                This site will give some insight on how each component works in MVC, may it be Models,
-                Views, Controllers, Action Filters, Authorization, Authentication, UrlRouting, Controller
-                factory, Dependency Injection (IOC), jquery, ajax etc etc etc.<br />
-                Simple example on this page is the <b>@@User.Identity.Name</b> used to display it
-                next to WELCOME.
-                <br />
-                I would try to cover most of the things required to develop a MVC application.
-            </p>
+            You know if you can see your name next to welcome you must be registered with this
+            site. If not then the site must be<br />
+            welcoming you as a "Guest".</p>
+        <p>
+            Ok that was obvious, if you are not registered to any site you would be treated
+            as a Guest. So whats different in this site?<br />
         </p>
+        <p>
+            This site will give some insight on how each component works in MVC, may it be Models,
+            Views, Controllers, Action Filters, Authorization, Authentication, UrlRouting, Controller
+            factory, Dependency Injection (IOC), jquery, ajax etc etc etc.<br />
+            Simple example on this page is the <b>@@User.Identity.Name</b> used to display it
+            next to WELCOME.
+            <br />
+            I would try to cover most of the things required to develop a MVC application.
+        </p>
+    </p>
     
-    </section>
+</section>
+</article>
 }
 <div id="recentActivities">
 </div>

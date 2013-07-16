@@ -5,17 +5,17 @@
 }
 <link href="../../../../Content/jquery.cleditor.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="../../../../Scripts/jquery.cleditor.js"></script>
-
+<article>
 <div>
     @using (Html.BeginForm("Create", "Blog", FormMethod.Post))
     {
-        <div>
+        <div class="blogform">
             <div>
                 <span>Category</span>
-                    @Html.TextBoxFor(e => e.Category)
+                @Html.TextBoxFor(e => e.Category)
             </div>
             <div>
-            <span>Topic</span>
+                <span>Topic</span>
                 @Html.TextBoxFor(e => e.Topic)
             </div>
             <div id="textarea">
@@ -25,7 +25,9 @@
         </div>
     }
 </div>
-<div class="bottompara">
+
+        </article>
+<summary>
     <p>
         Here we would look at some security aspects of MVC. Login and authentication is
         kind of security where you prevent un-authorized users to enter the web site or
@@ -42,13 +44,12 @@
         for attacks. For this we need to tell explicitly to the ASP.NET engine to allow
         untrusted data to enter your application. So what can be these attacks. <a href="https://www.owasp.org/index.php/Top_10_2013-Top_10"
                                                                                    target="_blank" class="fancyA">Here</a> is a list of top 10 security risks.
-        I know you were not expecting to tell you all these security risk on this site :).
+        I know you were not expecting that I would tell you all these security risk on this site :).
         See I need to explain how MVC helps us on basic security, and how can you handle
         scenarios where you want to allow the users to enter untrusted data. The WYSIWYG
         editors have data that cannot be trusted as it contains HTML &lt;TAGS&gt;
     </p>
-</div>
-
+</summary>
 <script type="text/javascript">
     $(function () {
         $("#Text").cleditor({
