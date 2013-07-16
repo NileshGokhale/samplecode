@@ -13,7 +13,7 @@
             }
         });
     });
-    
+
     function showList(year, month, date) {
         debugger;
         if (year) {
@@ -30,14 +30,13 @@
         }
     }
 </script>
+<article>
 @if (!string.IsNullOrEmpty(User.Identity.Name))
 {
 @*@Html.ActionLink("Create blog", "Create", "Blog", new { area = "Blogs" }, null)*@
     <a href="@Url.Action("Create", "Blog", new { area = "Blogs" })">New</a>
 }
-<h2>
-    Index</h2>
-<div class="leftPara">
+    <p>
     Did you know that this view is rendered from an AREA on this site? See the URL;
     Blogs is the area (folder) and Blog is the controller (Don't know what contollers
     are? You can visit microsoft to learn the MVC architecture <a href="http://msdn.microsoft.com/en-us/library/dd381412(VS.98).aspx"
@@ -51,7 +50,9 @@
     in the URL of the address bar of this browser. EX: Blogs/Blog/2013/06 will list
     all blogs from June-2013. If you want you can append the URL in this browser address
     bar, with the year you want and the site will show you if there are any blogs present
-    in any of the months in that year.</div>
+    in any of the months in that year.
+    </p>
+</article>
 <div id="archivePartial">
     @{
         Html.Partial("_ArchivePartial", Model);

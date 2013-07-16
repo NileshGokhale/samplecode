@@ -15,7 +15,7 @@
 
 </script>
 @section featured{
-    <div class="featured content-wrapper">
+    <article>
         @* @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { onclick = "javascript:login();" }))
         {*@
         <div class="leftPara">
@@ -80,5 +80,5 @@
             Now you understand how this validation stuff works. Lets login and dive in deeper.
             If you are not registered you can do it by clicking @Html.ActionLink("here", "Register", "Account", new { @class = "fancyA" })</p>
         @*        }*@
-    </div>
+    </article>
 }

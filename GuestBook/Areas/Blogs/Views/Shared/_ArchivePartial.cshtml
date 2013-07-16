@@ -1,7 +1,5 @@
 @model GuestBook.Areas.Blogs.Models.ArchiveViewModel
 @using System.Globalization
-@using DTO
-@using DataAccessObjects
 @{
     IEnumerable<int> period;
     if (Model.ShowMonth)
@@ -26,17 +24,19 @@
 <script type="text/javascript">
     
 </script>
-<div id="blogArchive">
-    <div class="float-right blogList">
-        <span>Blog Archive</span>
-        <div>
-            <ul>
-                @foreach (var item in period)
-                {
-                    string param = "'" + (Model.ShowYear ? item.ToString(CultureInfo.InvariantCulture) : null) + "','" + (Model.ShowMonth ? item.ToString(CultureInfo.InvariantCulture) : null) + "'," + (Model.ShowDay ? item.ToString(CultureInfo.InvariantCulture) : null);
-                    <li><span><a href="#" onclick="javascript:showList(@param)">@item</a> </span></li>
-                }
-            </ul>
+<div id="blogList">
+    <div id="blogArchive">
+        <div class="float-right blogList">
+            <span>Blog Archive</span>
+            <div>
+                <ul>
+                    @foreach (var item in period)
+                    {
+                        string param = "'" + (Model.ShowYear ? item.ToString(CultureInfo.InvariantCulture) : null) + "','" + (Model.ShowMonth ? item.ToString(CultureInfo.InvariantCulture) : null) + "'," + (Model.ShowDay ? item.ToString(CultureInfo.InvariantCulture) : null);
+                        <li><span><a href="#" onclick="javascript:showList(@param)">@item</a> </span></li>
+                    }
+                </ul>
+            </div>
         </div>
     </div>
 </div>
