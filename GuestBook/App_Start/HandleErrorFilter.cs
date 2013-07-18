@@ -7,9 +7,5 @@ namespace GuestBook.App_Start
     /// </summary>
     public class HandleErrorFilter : HandleErrorAttribute
     {
-        public override void OnException(ExceptionContext filterContext)
-        {
-            base.OnException(filterContext);
-        }
     }
 }

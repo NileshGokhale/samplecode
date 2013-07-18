@@ -1,7 +1,7 @@
 ﻿using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace GuestBook
+namespace GuestBook.App_Start
 {
     /// <summary>
     /// Register routes using this class

@@ -1,6 +1,6 @@
 ﻿using System.Web.Optimization;
 
-namespace GuestBook
+namespace GuestBook.App_Start
 {
     public class BundleConfig
     {

@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using DataAccessObjects;
 using GuestBook.Helpers;
 using MongoLibrary;
 using GuestBook.Models;
 using GuestBook.Security;
-using System.Security.Principal;
 using System.Configuration;
 
 namespace GuestBook.Controllers
@@ -19,13 +16,6 @@ namespace GuestBook.Controllers
     public class AccountController : BaseController
     {
         readonly IGenericRepository<User> _userRepository;
-        //
-        // GET: /Account/
-
-        public ActionResult Index()
-        {
-            return View();
-        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AccountController"/> class.
@@ -62,13 +52,10 @@ namespace GuestBook.Controllers
                 var user = _userRepository.Get(x => x.UserName == loginModel.UserName).SingleOrDefault();
                 if (user != null && PasswordHash.ValidatePassword(loginModel.Password, user.Password))
                 {
-                    Security.FormsAuthHelper.SetAuthTicket(user, HttpContext);
+                    FormsAuthHelper.SetAuthTicket(user, HttpContext);
                     return RedirectToAction("Index", "Home");
                 }
-                else
-                {
-                    ModelState.AddModelError("NotFound", "User not found");
-                }
+                ModelState.AddModelError("NotFound", "User not found");
             }
             return View(loginModel);
 
@@ -125,7 +112,7 @@ namespace GuestBook.Controllers
                     Email = registerModel.Email
                 };
                 _userRepository.Add(user);
-                Helpers.Helper.SendEmail("nileshgokhale45@gmail.com", user.Email, "Welcome", string.Format("Please verify your email address\r\n by following this <a href={0}>link</a>", Helpers.Helper.GetWelcomeEmailLink(user.UserName)));
+                Helper.SendEmail("nileshgokhale45@gmail.com", user.Email, "Welcome", string.Format("Please verify your email address\r\n by following this <a href={0}>link</a>", Helper.GetWelcomeEmailLink(user.UserName)));
             }
             return View();
         }
@@ -139,7 +126,7 @@ namespace GuestBook.Controllers
         [AllowAnonymous]
         public ActionResult ValidateEmail(string param)
         {
-            var result = Helpers.Helper.FromBase64(param);
+            var result = Helper.FromBase64(param);
             var split = result.Split(new[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
             var user = _userRepository.Get(x => x.UserName == split[0]).FirstOrDefault();
             DateTime date;
@@ -151,8 +138,11 @@ namespace GuestBook.Controllers
             else
             {
                 ViewBag.Error = "The link you accessed is really old. You might want to generate new validation link.";
-                ViewBag.Email = user.Email;
-                ViewBag.UserName = user.UserName;
+                if (user != null)
+                {
+                    ViewBag.Email = user.Email;
+                    ViewBag.UserName = user.UserName;
+                }
             }
 
             return View();
@@ -168,7 +158,7 @@ namespace GuestBook.Controllers
         [AllowAnonymous]
         public JsonResult SendVerificationEmail(string email, string userName)
         {
-            var result = Helpers.Helper.SendEmail("nileshgokhale45@gmail.com", email, "Welcome", string.Format("Please verify your email address\r\n by following this <a href={0}>link</a>", Helpers.Helper.GetWelcomeEmailLink(userName)));
+            var result = Helper.SendEmail("nileshgokhale45@gmail.com", email, "Welcome", string.Format("Please verify your email address\r\n by following this <a href={0}>link</a>", Helper.GetWelcomeEmailLink(userName)));
             return Json(result);
         }
 

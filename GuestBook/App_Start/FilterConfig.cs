@@ -1,7 +1,6 @@
 ﻿using System.Web.Mvc;
-using GuestBook.App_Start;
 
-namespace GuestBook
+namespace GuestBook.App_Start
 {
     /// <summary>
     /// Filter config to register custom filters

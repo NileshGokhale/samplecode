@@ -6,6 +6,7 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using DataAccessObjects;
 using System.Web.Security;
+using GuestBook.App_Start;
 using GuestBook.Security;
 using System.Web.Script.Serialization;
 
@@ -32,55 +33,28 @@ namespace GuestBook
         }
 
         /// <summary>
-        /// Handles the AuthenticateRequest event of the Application control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
-        protected void Application_AuthenticateRequest(object sender, EventArgs e)
-        {
-            //HttpCookie authCookie = Context.Request.Cookies[FormsAuthentication.FormsCookieName];
-            //if (authCookie == null || authCookie.Value == string.Empty)
-            //    return;
-
-            //FormsAuthenticationTicket ticket;
-            //try
-            //{
-            //    ticket = FormsAuthentication.Decrypt(authCookie.Value);
-            //    JavaScriptSerializer serializer = new JavaScriptSerializer();
-            //    CustomPrincipal principal = serializer.Deserialize<CustomPrincipal>(ticket.UserData);
-            //    HttpContext.Current.User = principal;
-            //}
-            //catch
-            //{
-            //    return;
-            //}
-
-        }
-
-        /// <summary>
         /// Handles the PostAuthenticateRequest event of the Application control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         protected void Application_PostAuthenticateRequest(object sender, EventArgs e)
         {
-            HttpCookie authCookie = Context.Request.Cookies[FormsAuthentication.FormsCookieName];
+            var authCookie = Context.Request.Cookies[FormsAuthentication.FormsCookieName];
             if (authCookie == null || authCookie.Value == string.Empty)
                 return;
 
-            FormsAuthenticationTicket ticket;
             try
             {
-                ticket = FormsAuthentication.Decrypt(authCookie.Value);
+                var ticket = FormsAuthentication.Decrypt(authCookie.Value);
                 var serializer = new JavaScriptSerializer();
                 var user = serializer.Deserialize<User>(ticket.UserData);
-                CustomPrincipal newUser = FormsAuthHelper.GetPrincipal(user);
+                var newUser = FormsAuthHelper.GetPrincipal(user);
 
                 HttpContext.Current.User = newUser;
             }
-            catch (Exception ex)
+            catch
             {
-                return;
+                //do nothing
             }
         }
     }
