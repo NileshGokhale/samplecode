@@ -22,23 +22,32 @@
         });
         function hasAjaxRequest() {
             $.ajax({
-                url: '@Url.Action("HasAjaxRequest", "Base")',
+                url: '@Url.Action("HasAjaxRequest", "Account")',
                 type: 'GET',
-                success: function () {
-                    debugger;
+                success: function (hasrequest) {
+                    if (hasrequest == true) {
+                        $.ajax({
+                            url: '@Url.Action("GetExecutingAjaxMethod", "Account")',
+                            type: 'GET',
+                            success: function(data) {
+//                                if (data != "")
+//                                    $("#ajaxRequestBar").html("Executing - " + data);
+                            }
+                        });
+                    }
                 }
             });
         }
     </script>
 </head>
 <body>
+    <div id="ajaxRequestBar">
+    </div>
     <nav>
             @Html.Partial("_MenuPartial")            
         </nav>
-    
-        @RenderSection("featured", required: false)
-
-            @RenderBody()
+    @RenderSection("featured", required: false)
+    @RenderBody()
     @RenderSection("Scripts", required: false);
 </body>
 </html>

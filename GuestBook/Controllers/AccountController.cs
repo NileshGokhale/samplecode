@@ -196,5 +196,19 @@ namespace GuestBook.Controllers
         {
             return SessionHelper.HasAjaxRequest;
         }
+
+        /// <summary>
+        /// Gets the executing ajax method.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public JsonResult GetExecutingAjaxMethod()
+        {
+            if (SessionHelper.HasAjaxRequest)
+            {
+                return Json(SessionHelper.AjaxRequest);
+            }
+            return Json(string.Empty);
+        }
     }
 }

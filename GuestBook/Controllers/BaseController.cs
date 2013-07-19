@@ -17,7 +17,10 @@ namespace GuestBook.Controllers
         {
             if (filterContext.HttpContext.Request.IsAjaxRequest())
             {
-                SessionHelper.AjaxRequest = filterContext.ActionDescriptor.ActionName;
+                if (filterContext.ActionDescriptor.ActionName != "HasAjaxRequest" || filterContext.ActionDescriptor.ActionName != "GetExecutingAjaxMethod")
+                {
+                    SessionHelper.AjaxRequest = filterContext.ActionDescriptor.ActionName;
+                }
             }
             base.OnActionExecuting(filterContext);
         }
